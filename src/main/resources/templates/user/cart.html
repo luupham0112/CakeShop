@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="zxx"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="Ogani Template">
+    <meta name="keywords" content="Ogani, unica, creative, html">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Shopping Cart</title>
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;600;900&display=swap" rel="stylesheet">
+
+    <!-- Css Styles -->
+    <link rel="stylesheet" href="/user/css/bootstrap.min.css" type="text/css">
+    <link rel="stylesheet" href="/user/css/font-awesome.min.css" type="text/css">
+    <link rel="stylesheet" href="/user/css/elegant-icons.css" type="text/css">
+    <link rel="stylesheet" href="/user/css/nice-select.css" type="text/css">
+    <link rel="stylesheet" href="/user/css/jquery-ui.min.css" type="text/css">
+    <link rel="stylesheet" href="/user/css/owl.carousel.min.css" type="text/css">
+    <link rel="stylesheet" href="/user/css/slicknav.min.css" type="text/css">
+    <link rel="stylesheet" href="/user/css/style.css" type="text/css">
+</head>
+
+<body>
+<div th:replace="user/header::header"></div>
+
+<!-- Breadcrumb Section Begin -->
+<section class="breadcrumb-section set-bg" data-setbg="/user/img/breadcrumb.jpg">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 text-center">
+                <div class="breadcrumb__text">
+                    <h2>Shopping Cart</h2>
+                    <div class="breadcrumb__option">
+                        <a th:href="@{/shop}">Home</a>
+                        <span>Shopping Cart</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Breadcrumb Section End -->
+
+<!-- Shoping Cart Section Begin -->
+<section class="shoping-cart spad">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div th:if="${check}" class="text-center alert-warning">
+                    <p th:text="${check}"></p>
+                </div>
+                <div class="shoping__cart__table">
+                    <table>
+                        <thead>
+                        <tr>
+                            <th class="shoping__product">Products</th>
+                            <th>Price</th>
+                            <th>Quantity</th>
+                            <th>Total</th>
+                            <th></th>
+                            <th></th>
+
+                        </tr>
+                        </thead>
+                        <tbody>
+
+                        <tr th:each="cartitem: ${cart.cartItem}">
+                            <td class="shoping__cart__item">
+                                <img th:src="@{${'/imageProduct/'+ cartitem.product.imageName}}" alt="">
+                                <h5 th:text="${cartitem.product.name}" ></h5>
+                            </td>
+                            <td class="shoping__cart__price" th:text="${cartitem.product.price}"></td>
+                            <form th:action="@{/update-cart}" method="post">
+                                <input type="hidden" name="id" th:value="${cartitem.product.productId}">
+                            <td class="shoping__cart__quantity">
+                                <div class="quantity">
+                                    <div class="pro-qty">
+                                        <input type="text" name="quantity" th:value="${cartitem.quantity}">
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="shoping__cart__total" th:text="${cartitem.totalPrice}">
+                            </td>
+                            <td class="shoping__cart__item__close">
+                                    <button type="submit" name="action" value="update" title="Update"
+                                            class="primary-btn cart-btn">Update
+                                    </button>
+                            </td>
+                            </form>
+
+                            <td class="shoping__cart__item__close">
+                                <a th:href="@{/delete-cart/{id}(id=${cartitem.product.productId})}"><i class="fa fa-close"></i></a>
+                            </td>
+
+                        </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="shoping__cart__btns">
+                    <a th:href="@{/shop}" class="primary-btn cart-btn">CONTINUE SHOPPING</a>
+
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="shoping__continue">
+                    <div class="shoping__discount">
+                        <h5 >Discount Codes</h5>
+                        <form action="#">
+                            <input type="text" placeholder="Enter your coupon code">
+                            <button type="submit" class="site-btn">APPLY COUPON</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="shoping__checkout">
+                    <h5>Cart Total</h5>
+                    <ul>
+                        <li>Subtotal <span th:text="${subTotal}"></span>VND</li>
+                        <li>Shipping <span >15000 VND</span></li>
+                        <li>Total <span th:text="${subTotal + 15000}"></span>VND</li>
+                    </ul>
+                    <a th:href="@{/check-out}" class="primary-btn">PROCEED TO CHECKOUT</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Shoping Cart Section End -->
+
+<div th:replace="user/footer::footer"></div>
+
+<!-- Js Plugins -->
+<script src="/user/js/jquery-3.3.1.min.js"></script>
+<script src="/user/js/bootstrap.min.js"></script>
+<script src="/user/js/jquery.nice-select.min.js"></script>
+<script src="/user/js/jquery-ui.min.js"></script>
+<script src="/user/js/jquery.slicknav.js"></script>
+<script src="/user/js/mixitup.min.js"></script>
+<script src="/user/js/owl.carousel.min.js"></script>
+<script src="/user/js/main.js"></script>
+
+
+
+</body>
+
+</html>
+
+
